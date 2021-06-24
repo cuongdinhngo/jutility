@@ -12,15 +12,15 @@
     "autoload": {
         "psr-4": {
             "Cuongnd88\\Jutility\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Cuongnd88\\Jutility\\Test\\": "tests"
         },
         "files": [
             "src/Helper/helpers.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cuongnd88\\Jutility\\Test\\": "tests"
+        }
     },
     "extra": {
         "laravel": {
