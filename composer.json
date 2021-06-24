@@ -1,0 +1,28 @@
+{
+    "name": "cuongnd88/jpostal-code",
+    "description": "Laravel Japanese Postal Code",
+    "authors": [
+        {
+            "name": "Ngo Dinh Cuong",
+            "email": "dinhcuongngo@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Cuongnd88\\Jutility\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cuongnd88\\Jutility\\Test\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cuongnd88\\Jutility\\JutilityServiceProvider"
+            ]
+        }
+    }
+}
