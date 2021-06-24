@@ -25,14 +25,14 @@ class JutilityServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../config' => $this->app->configPath(),
-        ], 'jpostal-config');
+        ], 'config');
 
         $this->publishes([
             __DIR__.'/../public' => public_path(),
-        ], 'jpostal-public');
+        ], 'public');
 
         $this->publishes([
             __DIR__.'/../lang' => resource_path(),
-        ], 'ja-lang');
+        ], 'lang');
     }
 }
