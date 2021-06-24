@@ -1,0 +1,2 @@
+# jutility
+Laravel Japanese Utility
