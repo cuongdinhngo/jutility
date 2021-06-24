@@ -1,6 +1,6 @@
 <?php
 
-namespace Cuongnd88\JPostalCode;
+namespace Cuongnd88\Jutility;
 
 use Illuminate\Support\ServiceProvider;
 
