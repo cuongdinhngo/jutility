@@ -32,7 +32,7 @@ class JutilityServiceProvider extends ServiceProvider
         ], 'public');
 
         $this->publishes([
-            __DIR__.'/../lang' => resource_path(),
+            __DIR__.'/../resources' => resource_path(),
         ], 'lang');
     }
 }
