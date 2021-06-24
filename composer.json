@@ -7,7 +7,7 @@
             "email": "dinhcuongngo@gmail.com"
         }
     ],
-    "license": "MIT License",
+    "license": "MIT",
     "require": {},
     "autoload": {
         "psr-4": {
