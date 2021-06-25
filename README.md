@@ -44,7 +44,7 @@ With the JPostal utility, you can achieve Japanese postal data by postal code. Y
         <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Post code') }}</label>
 
         <div class="col-md-6">
-            <input id="zip" type="text" class="form-control" name="email" value="" onkeyup="JPortal.capture('#zip', ['#info'])">
+            <input id="zip" type="text" class="form-control" name="email" value="" onkeyup="JPostal.capture('#zip', ['#info'])">
         </div>
     </div>
 
@@ -59,7 +59,7 @@ With the JPostal utility, you can achieve Japanese postal data by postal code. Y
 . . . .
 <script type="text/javascript" src="{{ asset('js/jpostal/jpostal.js') }}"></script>
 <script type="text/javascript">
-    JPortal.init();
+    JPostal.init();
 </script>
 ```
 
@@ -73,16 +73,16 @@ _`MEMO` you can use id and class signs for zip and response parameters. You can 
 
 ```php
 	<div class="col-md-6">
-	    <input id="zip" type="text" class="form-control" name="email" value="" onkeyup="JPortal.capture('#zip', ['.prefecture', '.city', '.area', '.street'])">
+	    <input id="zip" type="text" class="form-control" name="email" value="" onkeyup="JPostal.capture('#zip', ['.prefecture', '.city', '.area', '.street'])">
 	</div>
 ```
 
 ```php
 <script type="text/javascript">
-    JPortal.init();
+    JPostal.init();
 
     $( "#zip" ).keyup(function() {
-        JPortal.capture('#zip', function(data){
+        JPostal.capture('#zip', function(data){
             console.log(data);
         });
     });
