@@ -89,6 +89,59 @@ _`MEMO` you can use id and class signs for zip and response parameters. You can 
 </script>
 ```
 
+The JPostal provides functions to select a city correspond to a prefecture
+
+_`JPostal.innerPrefecturesHtml(callback)` ._
+
+_`JPostal.nnerCityHtmlByPref(prefTag, callback)` ._
+
+
+```php
+. . . .
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">{{ __('Prefecture') }}</label>
+
+        <div class="col-md-6">
+            <select class="form-control selectPrefecture" id="selectPrefecture">
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
+
+        <div class="col-md-6">
+            <select class="form-control selectCity" id="selectCity">
+            </select>
+        </div>
+    </div>
+. . . .
+
+<script type="text/javascript" src="{{ asset('js/jpostal/jpostal.js') }}"></script>
+<script type="text/javascript">
+    JPostal.init();
+
+    JPostal.innerPrefecturesHtml(function(prefectures){
+        let selectTag = '<option value="">Prefecture</option>';
+        for (const [key, value] of Object.entries(prefectures)) {
+            selectTag += `<option value="${key}">${value}</option>`;
+        }
+        $('#selectPrefecture').append(selectTag);
+    });
+
+    $("#selectPrefecture").change(function(){
+        JPostal.innerCityHtmlByPref('#selectPrefecture', function(cities){
+            let selectTag = '<option value="">City</option>';
+            for (const item in cities) {
+                const {id, name} = cities[item];
+                selectTag += `<option value="${id}">${name}</option>`;
+            }
+            $('#selectCity').append(selectTag);
+        });
+    });
+</script>
+```
+
 ### JPostal Utility via PHP/Laravel
 
 There are several functions to assist you get Japanese postal code:
