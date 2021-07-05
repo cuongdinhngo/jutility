@@ -1,6 +1,8 @@
 # Laravel Japanese Utility
 
-This package provides a convenient way to retrieve Japanese Utility such as Japanese Postal Code, Japanese Localization
+This package provides a convenient way to retrieve Japanese Utility such as Japanese Postal Code, Japanese Localization, CSV
+
+## Installation
 
 1-Install `cuongnd88/jutility` using Composer.
 
@@ -193,8 +195,124 @@ Language strings are stored in files within the resources/lang directory.
             messages.php
 ```
 
+### CSV
+
+The CSV utility support to read, validate and get the CSV file. You have to set the valitor in `config/csv.php`. Please refer to the defaut:
+
+```php
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | UTF-8 Bom
+    |--------------------------------------------------------------------------
+    |
+    | The UTF-8 BOM is a sequence of bytes at the start of a text stream (0xEF, 0xBB, 0xBF)
+    | that allows the reader to more reliably guess a file as being encoded in UTF-8.
+    | Suitable for exporting Japanese data
+    |
+    */
+    'utf-8-bom' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Validator Support
+    |--------------------------------------------------------------------------
+    |
+    | This is a sample defines how to validate CSV data:
+    | - `user.header` is to identify the format of CSV file, that compare the standard header to the CSV header.
+    | The "Invalid Header" message of Exception is threw if there is an error
+    |
+    | - `user.validator` is based on Laravel Validator. If you have multiple user tables or models you may configure multiple
+    |       + `user.validator.rules`: set the Laravel validation rules
+    |       + `user.validator.messages`: customize the Laravel default error messages
+    |       + `user.validator.attributes`: customize the validation attributes
+    */
+    'user' => [
+        'header' => [
+            'fname' => 'First Name',
+            'lname' => 'Last Name',
+            'email' => 'Email',
+        ],
+        'validator' => [
+            'rules' => [
+                'fname' => 'required',
+                'lname' => 'required',
+                'email' => 'required|email',
+            ],
+            'messages' => [],
+            'attributes' => [],
+        ],
+    ],
+];
+```
+
+The `CSV` is a facade that provides access to an object from the container. You just need to import the `CSV` facade near the top of the file.
+
+```php
+. . . .
+use Cuongnd88\Jutility\Facades\CSV;
+
+class UserController extends Controller
+{
+    . . . .
+    public function postCSV(Request $request)
+    {
+        $csv = CSV::read(
+                    $request->csv,
+                    config('csv.user.header'),
+                    config('csv.user.validator')
+                )->filter();
+        dump($csv);
+    }
+}
+. . . .
+```
+
+_`read($file, array $standardHeader = [], $validatorConfig = null)`: read CSV file, return CSV object ._
+
+_`filter()`: filter CSV data, return an array `['validated' => [...], 'error' => [...]]`._
+
+
+_`get()`: get CSV data (including validated and error data) except CSV header line, return an array._
+
+_`validatorErrors()`: get validated errors, return an array ._
+
+
+```php
+    public function postCSV(Request $request)
+    {
+        $csv = CSV::read(
+                    $request->csv,
+                    config('csv.user.header'),
+                    config('csv.user.validator')
+                );
+        $data = $csv->get();
+        dump($data);
+        $errorList = $csv->validatorErrors();
+        dump($errorList);
+    }
+```
+
+_`MEMO`: the CSV returns an array data (or error list), the index array is line number of CSV file._
+
+
+_`save(string $fileName, array $data, $header = null)`: export data to CSV file ._
+
+
+```php
+    public function downloadCSV()
+    {
+        $data = User::all()->toArray();
+        $header = ['ID','Fullname','Email','Mobile number', 'Email verified data time', 'Created date time', 'Updated date time'];
+        CSV::save('user-data', $data, $header);
+    }
+```
+
 ## Demo
 
 This is demo soure code.
+
 [JPostal Utility](https://github.com/cuongnd88/lara-colab/blob/master/alpha/resources/views/user/jpostal.blade.php)
+
+[CSV Utility](https://github.com/cuongnd88/lara-colab/blob/master/alpha/resources/views/user/jpostal.blade.php)
 
