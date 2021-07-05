@@ -3,6 +3,7 @@
 namespace Cuongnd88\Jutility;
 
 use Illuminate\Support\ServiceProvider;
+use Cuongnd88\Jutility\Support\CSV;
 
 class JutilityServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,9 @@ class JutilityServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->app->singleton('csv', function(){
+            return new CSV();
+        });
     }
 
     /**
